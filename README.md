@@ -93,17 +93,22 @@ Note: Unnecessary use of -X or --request, GET is already inferred.
 ...
 ```
 
-### 4. The following to explain the logs from CURL in the above 3.. 
+### 4. Explain the logs from CURL in 3. 
 
-    (1) The client sends an HTTP CONNECT request to NGINX forwaring proxy sever.  The NGNIX forwarding proxy server uses the host and port information in the HTTP CONNECT request which is used to establish a TCP connection with the target server.  
-    (2) The NGINX proxy server returns an HTTP 200 response to the client.
-    (3) The client establishes an HTTP CONNECT tunnel with the targer server throuhg the NGINX forwarding proxy sever.
-    (4) The client sends HTTPS traffic to the NGINX proxy server.  The NGINX proxy server only transparently transmits HTTPS traffic to the target server (i.e. google.com) without any modification or decryption of the traffic.
-    (5) The reverse direction is the same as (4).  The response HTTPS traffic is also transmitted to the client without any modification.
+(1) The client sends an HTTP CONNECT request to NGINX forwaring proxy sever.  The NGNIX forwarding proxy server uses the host and port information in the HTTP CONNECT request which is used to establish a TCP connection with the target server.  
+
+(2) The NGINX proxy server returns an HTTP 200 response to the client.
+
+(3) The client establishes an HTTP CONNECT tunnel with the targer server throuhg the NGINX forwarding proxy sever.
+
+(4) The client sends HTTPS traffic to the NGINX proxy server.  The NGINX proxy server only transparently transmits HTTPS traffic to the target server (i.e. google.com) without any modification or decryption of the traffic.
+
+(5) The reverse direction is the same as (4).  The response HTTPS traffic is also transmitted to the client without any modification.
+
 
 
 ```
-   CURL                         NGINX (forward_https_proxy)      GOOGLE.COM
+   CURL                      NGINX (forwarding_https_proxy)      GOOGLE.COM
     |                                  |                             |
 (1) |---- CONNECT google.com:443  ---->|                             |
     |                                  |                             |
@@ -129,6 +134,5 @@ Note: Unnecessary use of -X or --request, GET is already inferred.
 (5) |<----[ HTTP/1.1 200 OK  ]---------|     [ < response data >]    |
     |     [ < response data >]         |                             |
     |                                  |                             |
-
 ```
 
